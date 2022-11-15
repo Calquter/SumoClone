@@ -5,11 +5,20 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField] protected Animator _animator;
+    [SerializeField] protected Rigidbody _rigidBody;
 
     [SerializeField] protected float _playerSpeed;
     [SerializeField] protected float _baseForce;
-    public int takenHitCount;
+    public int takenHitCountFromBack;
 
+
+    public bool isTakenHit;
+    private float _timer = 2f;
+
+    private void LateUpdate()
+    {
+        HitAllow();
+    }
 
     private float CalculateHitForce(Transform enemyTransform)
     {
@@ -23,9 +32,14 @@ public class Character : MonoBehaviour
             return 2f;
     }
 
-    private void HitToEnemies(Rigidbody enemyRB)
+    protected void HitToEnemies(Rigidbody enemyRB)
     {
         _animator.SetTrigger("Hit");
+
+        Character character = enemyRB.GetComponent<Character>();
+        character.isTakenHit = true;
+        print(character.gameObject.name);
+
 
         float additionalHitForceMultiplier = CalculateHitForce(enemyRB.transform);
 
@@ -38,10 +52,17 @@ public class Character : MonoBehaviour
         return Vector3.Dot(enemyTransform.forward, transform.position - enemyTransform.position);
     }
 
-
-    protected void OnCollisionEnter(Collision collision)
+    private void HitAllow()
     {
-        if (collision.gameObject.layer == 6) // Layer 6 is enemy layer.
-            HitToEnemies(collision.gameObject.GetComponent<Rigidbody>());
+        if (!isTakenHit)
+            return;
+
+        if (_timer <= 0)
+        {
+            isTakenHit = false;
+            _timer = 2f;
+        }
+        else
+            _timer -= Time.deltaTime;
     }
 }
