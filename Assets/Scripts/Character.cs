@@ -13,8 +13,6 @@ public class Character : MonoBehaviour
     {
         float dotValue = DotProductForHitter(enemyTransform);
 
-        print(dotValue);
-
         if (dotValue >= 0.3f) //This means you are in front of the enemy.
             return 1f;
         else if (dotValue < 0.3f && dotValue > -0.3f) //This means you are beside of the enemy.
