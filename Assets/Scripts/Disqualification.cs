@@ -6,7 +6,7 @@ public class Disqualification : MonoBehaviour
     {
         if (other.gameObject.layer == 6)
         {
-            other.gameObject.SetActive(false);
+            GameManager.instance.EleminatePlayer(other.gameObject);
         }
     }
 }

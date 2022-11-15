@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
         return Vector3.Dot(enemyTransform.forward, transform.position - enemyTransform.position);
     }
 
-    protected void HitAllow()
+    protected void HitAllow() //Controls the stun time when you get a hit.
     {
         if (!isTakenHit)
             return;

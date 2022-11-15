@@ -13,11 +13,17 @@ public class CharacterController : Character
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isGameStart)
+            return;
+
         Move();
     }
 
     private void LateUpdate()
     {
+        if (!GameManager.instance.isGameStart)
+            return;
+
         HitAllow();
     }
 

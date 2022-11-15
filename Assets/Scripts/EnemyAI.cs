@@ -21,16 +21,25 @@ public class EnemyAI : Character
 
     private void Update()
     {
+        if (!GameManager.instance.isGameStart)
+            return;
+
         ChangeDirection();
     }
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isGameStart)
+            return;
+
         MoveForward();
     }
 
     private void LateUpdate()
     {
+        if (!GameManager.instance.isGameStart)
+            return;
+
         HitAllow();
 
         if (!ControlPlatformBounds())
