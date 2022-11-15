@@ -7,7 +7,9 @@ public class Disqualification : MonoBehaviour
         if (other.gameObject.layer == 6)
         {
             GameManager.instance.EleminatePlayer(other.gameObject);
-            GameManager.instance.AddScoreToPlayer(10);
+
+            if(other.gameObject.tag != "Player")
+                GameManager.instance.AddScoreToPlayer(10);
         }
     }
 }

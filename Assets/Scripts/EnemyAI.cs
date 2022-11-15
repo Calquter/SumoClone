@@ -42,7 +42,7 @@ public class EnemyAI : Character
 
         HitAllow();
 
-        if (!ControlPlatformBounds())
+        if (!ControlPlatformBounds()) //If AI going to the out of bounds to plane, Change AI direction.
             _timer = 0;
     }
 
@@ -68,7 +68,7 @@ public class EnemyAI : Character
             _rigidBody.velocity = transform.forward * _playerSpeed - transform.up;
     }
 
-    private bool ControlPlatformBounds()
+    private bool ControlPlatformBounds() //Controls the plane bounds.
     {
         return Physics.Raycast(_controlPoint.position, -_controlPoint.up, 10f);
     }

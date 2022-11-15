@@ -13,6 +13,9 @@ public class UIController : MonoBehaviour
     public TMP_Text scoreText;
     public GameObject readyButton;
 
+    public GameObject winPanel;
+    public GameObject losePanel;
+
     private void Awake() => instance = this;
 
 

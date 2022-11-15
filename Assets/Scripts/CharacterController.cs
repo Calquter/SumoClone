@@ -47,7 +47,7 @@ public class CharacterController : Character
         transform.rotation = Quaternion.Euler(0, _angle, 0);
 
         _rigidBody.velocity = (Vector3.forward * _inputValues.y + Vector3.right * _inputValues.x).normalized * _playerSpeed;
-        _rigidBody.velocity = -Vector3.up * 1.5f;
+        _rigidBody.velocity += -Vector3.up * 3f;
     }
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _fakePlayerCount = Random.Range(7, _fakePlayers.Length);
+        _fakePlayerCount = Random.Range(7, 15);
         StartCoroutine(InitPlayersWithDelay());
     }
 
@@ -32,16 +33,22 @@ public class GameManager : MonoBehaviour
         GameTimeControl();
     }
 
+    public void Rematch()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     private void ControlGameState()
     {
         if (!player.activeSelf)
         {
-            
+            UIController.instance.losePanel.SetActive(true);
             isGameStart = false;
         }
         else if (_initlializedFakePlayers.Count == 0)
         {
-            
+            UIController.instance.winPanel.SetActive(true);
+            player.GetComponent<Character>().animator.SetTrigger("Victory");
 
             isGameStart = false;
         }
@@ -49,6 +56,9 @@ public class GameManager : MonoBehaviour
 
     private void GameTimeControl()
     {
+        if (!isGameStart)
+            return;
+
         if (_gameTimer > 0)
         {
             _gameTimer -= Time.deltaTime;
@@ -62,10 +72,13 @@ public class GameManager : MonoBehaviour
             {
                 Character character = item.GetComponent<Character>();
                 character.animator.SetTrigger("Victory");
+                
             }
+            player.GetComponent<Character>().animator.SetTrigger("Victory");
+            UIController.instance.winPanel.SetActive(true);
         }
 
-        UIController.instance.timerText.text = _gameTimer.ToString();
+        UIController.instance.timerText.text = _gameTimer.ToString("F0");
     }
 
 
@@ -75,6 +88,8 @@ public class GameManager : MonoBehaviour
             _initlializedFakePlayers.Remove(obj);
 
         obj.SetActive(false);
+
+        UIController.instance.playerCountText.text = (_initlializedFakePlayers.Count + 1).ToString();
 
         ControlGameState();
     }
@@ -99,9 +114,9 @@ public class GameManager : MonoBehaviour
         UIController.instance.scoreText.text = $"Score: {playerScore}";
     }
 
-    private IEnumerator InitPlayersWithDelay()
+    private IEnumerator InitPlayersWithDelay() //Adding player with random delay for the multiplayer simulation.
     {
-        yield return new WaitForSeconds(Random.Range(1, 3));
+        yield return new WaitForSeconds(Random.Range(1, 2));
         InitPlayer();
 
         if (_fakePlayerCount > 0)
