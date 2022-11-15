@@ -953,8 +953,9 @@ MonoBehaviour:
   - {fileID: 1904343829}
   _initlializedFakePlayers: []
   player: {fileID: 1125681792}
-  _gameTimer: 0
-  isGameStart: 1
+  _gameTimer: 30
+  isGameStart: 0
+  playerScore: 0
 --- !u!114 &334533083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,6 +972,7 @@ MonoBehaviour:
   playerCountText: {fileID: 452673495}
   waitingText: {fileID: 629149208}
   timerText: {fileID: 0}
+  scoreText: {fileID: 0}
   readyButton: {fileID: 1749084432}
 --- !u!1001 &376845711
 PrefabInstance:
