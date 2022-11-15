@@ -36,12 +36,12 @@ public class GameManager : MonoBehaviour
     {
         if (!player.activeSelf)
         {
-            //LoseScreen
+            
             isGameStart = false;
         }
         else if (_initlializedFakePlayers.Count == 0)
         {
-            //Win Screen
+            
 
             isGameStart = false;
         }
@@ -57,6 +57,12 @@ public class GameManager : MonoBehaviour
         {
             _gameTimer = 0;
             isGameStart = false;
+
+            foreach (var item in _initlializedFakePlayers)
+            {
+                Character character = item.GetComponent<Character>();
+                character.animator.SetTrigger("Victory");
+            }
         }
 
         UIController.instance.timerText.text = _gameTimer.ToString();
