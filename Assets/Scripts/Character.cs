@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    [SerializeField] protected Animator _animator;
+
     [SerializeField] protected float _playerSpeed;
     [SerializeField] protected float _baseForce;
     public int takenHitCount;
@@ -23,6 +25,8 @@ public class Character : MonoBehaviour
 
     private void HitToEnemies(Rigidbody enemyRB)
     {
+        _animator.SetTrigger("Hit");
+
         float additionalHitForceMultiplier = CalculateHitForce(enemyRB.transform);
 
         Vector3 forceDirection = enemyRB.transform.position - transform.position;

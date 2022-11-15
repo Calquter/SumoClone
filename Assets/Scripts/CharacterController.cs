@@ -30,7 +30,11 @@ public class CharacterController : Character
         {
             _targetAngle = Mathf.Atan2(_inputValues.x, _inputValues.y) * Mathf.Rad2Deg;
 
+            
         }
+
+        _animator.SetFloat("MoveValue", _inputValues.magnitude);
+
         _angle = Mathf.LerpAngle(transform.eulerAngles.y, _targetAngle, _rotationSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, _angle, 0);
 
