@@ -32,17 +32,21 @@ public class Character : MonoBehaviour
     {
         animator.SetTrigger("Hit");
 
-        Character character = enemyRB.GetComponent<Character>();
-        character.isTakenHit = true; //When you hit an enemy, they need to stop moving somwhere and this controls it.
-
         float dotValue;
         float additionalHitForceMultiplier = CalculateHitForce(enemyRB.transform, out dotValue);
+       
+        if (dotValue <= 0.3f)
+        {
+            Character character = enemyRB.GetComponent<Character>();
+            character.isTakenHit = true; //When you hit an enemy, they need to stop moving somwhere and this controls it.
 
-        character.timer += (dotValue * 0.5f) + (enemyRB.GetComponent<Character>().takenHitCountFromBack * 0.3f); 
+            character.timer += (Mathf.Abs(dotValue) * 0.5f) + (enemyRB.GetComponent<Character>().takenHitCountFromBack * 0.3f);
 
-        Vector3 forceDirection = enemyRB.transform.position - transform.position;
-        enemyRB.AddForce(forceDirection * _baseForce * additionalHitForceMultiplier, ForceMode.VelocityChange);
-        character.animator.SetTrigger("TookHit");
+            Vector3 forceDirection = enemyRB.transform.position - transform.position;
+            enemyRB.AddForce(forceDirection * _baseForce * additionalHitForceMultiplier, ForceMode.VelocityChange);
+            character.animator.SetTrigger("TookHit");
+        }
+            
     }
 
     private float DotProductForHitter(Transform enemyTransform) //This method will calculate where is the hitter.
