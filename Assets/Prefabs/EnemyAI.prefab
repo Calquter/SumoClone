@@ -79,12 +79,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e85f91a111dd94fadde41ed94f95e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 8592079330795639826}
+  animator: {fileID: 8592079330795639826}
   _rigidBody: {fileID: 2762860554538253028}
   _playerSpeed: 2.5
   _baseForce: 3
   takenHitCountFromBack: 0
   isTakenHit: 0
+  timer: 2
   _minTime: 2
   _maxTime: 4
   _controlPoint: {fileID: 180945262}

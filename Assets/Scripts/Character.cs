@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] protected Animator _animator;
+    public Animator animator;
     [SerializeField] protected Rigidbody _rigidBody;
 
     [SerializeField] protected float _playerSpeed;
@@ -30,17 +30,19 @@ public class Character : MonoBehaviour
 
     protected void HitToEnemies(Rigidbody enemyRB)
     {
-        _animator.SetTrigger("Hit");
+        animator.SetTrigger("Hit");
 
         Character character = enemyRB.GetComponent<Character>();
         character.isTakenHit = true; //When you hit an enemy, they need to stop moving somwhere and this controls it.
 
         float dotValue;
         float additionalHitForceMultiplier = CalculateHitForce(enemyRB.transform, out dotValue);
-        enemyRB.GetComponent<Character>().timer += (dotValue * 0.5f) + (enemyRB.GetComponent<Character>().takenHitCountFromBack * 0.3f); 
+
+        character.timer += (dotValue * 0.5f) + (enemyRB.GetComponent<Character>().takenHitCountFromBack * 0.3f); 
 
         Vector3 forceDirection = enemyRB.transform.position - transform.position;
         enemyRB.AddForce(forceDirection * _baseForce * additionalHitForceMultiplier, ForceMode.VelocityChange);
+        character.animator.SetTrigger("TookHit");
     }
 
     private float DotProductForHitter(Transform enemyTransform) //This method will calculate where is the hitter.

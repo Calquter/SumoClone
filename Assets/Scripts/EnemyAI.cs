@@ -39,6 +39,9 @@ public class EnemyAI : Character
 
     private void ChangeDirection()
     {
+        if (isTakenHit)
+            return;
+
         if (_timer <= 0)
         {
             _targetAngle = Random.Range(0, 360);

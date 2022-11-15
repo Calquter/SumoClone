@@ -47,12 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35310ead32f05194b9434588c1004b20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 7437798064769662210}
+  animator: {fileID: 7437798064769662210}
   _rigidBody: {fileID: 3914411234477978374}
   _playerSpeed: 5
   _baseForce: 3.5
   takenHitCountFromBack: 0
   isTakenHit: 0
+  timer: 2
   joystick: {fileID: 0}
   _rotationSpeed: 5
 --- !u!54 &3914411234477978374
