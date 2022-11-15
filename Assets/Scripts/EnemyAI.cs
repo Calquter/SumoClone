@@ -56,7 +56,7 @@ public class EnemyAI : Character
     private void MoveForward()
     {
         if (!isTakenHit)
-            _rigidBody.velocity = transform.forward * _playerSpeed;
+            _rigidBody.velocity = transform.forward * _playerSpeed - transform.up;
     }
 
     private bool ControlPlatformBounds()
