@@ -13,16 +13,12 @@ public class Character : MonoBehaviour
 
 
     public bool isTakenHit;
-    private float _timer = 2f;
+    public float timer = 2f;
 
-    private void LateUpdate()
-    {
-        HitAllow();
-    }
 
-    private float CalculateHitForce(Transform enemyTransform)
+    private float CalculateHitForce(Transform enemyTransform, out float dotValue) //Calculate additional hit force.
     {
-        float dotValue = DotProductForHitter(enemyTransform);
+        dotValue = DotProductForHitter(enemyTransform);
 
         if (dotValue >= 0.3f) //This means you are in front of the enemy.
             return 1f;
@@ -37,11 +33,11 @@ public class Character : MonoBehaviour
         _animator.SetTrigger("Hit");
 
         Character character = enemyRB.GetComponent<Character>();
-        character.isTakenHit = true;
-        print(character.gameObject.name);
+        character.isTakenHit = true; //When you hit an enemy, they need to stop moving somwhere and this controls it.
 
-
-        float additionalHitForceMultiplier = CalculateHitForce(enemyRB.transform);
+        float dotValue;
+        float additionalHitForceMultiplier = CalculateHitForce(enemyRB.transform, out dotValue);
+        enemyRB.GetComponent<Character>().timer += (dotValue * 0.5f) + (enemyRB.GetComponent<Character>().takenHitCountFromBack * 0.3f); 
 
         Vector3 forceDirection = enemyRB.transform.position - transform.position;
         enemyRB.AddForce(forceDirection * _baseForce * additionalHitForceMultiplier, ForceMode.VelocityChange);
@@ -52,17 +48,17 @@ public class Character : MonoBehaviour
         return Vector3.Dot(enemyTransform.forward, transform.position - enemyTransform.position);
     }
 
-    private void HitAllow()
+    protected void HitAllow()
     {
         if (!isTakenHit)
             return;
 
-        if (_timer <= 0)
+        if (timer <= 0)
         {
             isTakenHit = false;
-            _timer = 2f;
+            timer = 1f;
         }
         else
-            _timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
     }
 }

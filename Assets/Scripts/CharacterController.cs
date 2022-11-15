@@ -16,6 +16,12 @@ public class CharacterController : Character
         Move();
     }
 
+    private void LateUpdate()
+    {
+        HitAllow();
+    }
+
+
     private void Move()
     {
         if (isTakenHit)
@@ -38,6 +44,7 @@ public class CharacterController : Character
 
         _rigidBody.velocity = (Vector3.forward * _inputValues.y + Vector3.right * _inputValues.x).normalized * _playerSpeed;
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {

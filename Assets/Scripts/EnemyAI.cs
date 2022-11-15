@@ -7,7 +7,7 @@ public class EnemyAI : Character
     [Range(2, 4)] [SerializeField] private float _minTime;
     [Range(4, 6)] [SerializeField] private float _maxTime;
 
-    private float _timer;
+    private float _timer = 0f;
 
     private float _targetAngle;
 
@@ -31,6 +31,8 @@ public class EnemyAI : Character
 
     private void LateUpdate()
     {
+        HitAllow();
+
         if (!ControlPlatformBounds())
             _timer = 0;
     }
