@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
 
     private int _fakePlayerCount;
 
-
+    [SerializeField] private float _gameTimer;
     public bool isGameStart;
+
+    public int playerScore = 0;
 
     private void Awake() => instance = this;
 
@@ -25,17 +27,41 @@ public class GameManager : MonoBehaviour
         StartCoroutine(InitPlayersWithDelay());
     }
 
+    private void Update()
+    {
+        GameTimeControl();
+    }
+
     private void ControlGameState()
     {
         if (!player.activeSelf)
         {
             //LoseScreen
+            isGameStart = false;
         }
         else if (_initlializedFakePlayers.Count == 0)
         {
             //Win Screen
+
+            isGameStart = false;
         }
     }
+
+    private void GameTimeControl()
+    {
+        if (_gameTimer > 0)
+        {
+            _gameTimer -= Time.deltaTime;
+        }
+        else if (_gameTimer <= 0)
+        {
+            _gameTimer = 0;
+            isGameStart = false;
+        }
+
+        UIController.instance.timerText.text = _gameTimer.ToString();
+    }
+
 
     public void EleminatePlayer(GameObject obj)
     {
@@ -55,8 +81,16 @@ public class GameManager : MonoBehaviour
         {
             selectedPlayer.SetActive(true);
             _initlializedFakePlayers.Add(selectedPlayer);
+            UIController.instance.playerCountText.text = (_initlializedFakePlayers.Count + 1).ToString();
             _fakePlayerCount--;
         }
+    }
+
+    public void AddScoreToPlayer(int amount)
+    {
+        playerScore += amount;
+
+        UIController.instance.scoreText.text = $"Score: {playerScore}";
     }
 
     private IEnumerator InitPlayersWithDelay()
@@ -66,6 +100,11 @@ public class GameManager : MonoBehaviour
 
         if (_fakePlayerCount > 0)
             StartCoroutine(InitPlayersWithDelay());
+        else
+        {
+            UIController.instance.waitingText.text = "All Players are Ready";
+            UIController.instance.readyButton.SetActive(true);
+        }
 
     }
 
