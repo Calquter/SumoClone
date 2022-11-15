@@ -31,7 +31,7 @@ public class EnemyAI : Character
 
     private void LateUpdate()
     {
-        if (!ControlPlatformBounces())
+        if (!ControlPlatformBounds())
             _timer = 0;
     }
 
