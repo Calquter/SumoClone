@@ -11,6 +11,8 @@ public class EnemyAI : Character
 
     private float _targetAngle;
 
+    [SerializeField] private Transform _controlPoint;
+
     private void Start()
     {
         SetUpTimer();
@@ -20,12 +22,17 @@ public class EnemyAI : Character
     private void Update()
     {
         ChangeDirection();
-        
     }
 
     private void FixedUpdate()
     {
         MoveForward();
+    }
+
+    private void LateUpdate()
+    {
+        if (!ControlPlatformBounces())
+            _timer = 0;
     }
 
     private void ChangeDirection()
@@ -45,6 +52,11 @@ public class EnemyAI : Character
     {
         if (!isTakenHit)
             _rigidBody.velocity = transform.forward * _playerSpeed;
+    }
+
+    private bool ControlPlatformBounds()
+    {
+        return Physics.Raycast(_controlPoint.position, -_controlPoint.up, 10f);
     }
 
     private void SetUpTimer() => _timer = Random.Range(_minTime, _maxTime);
