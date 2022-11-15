@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class CharacterController : Character
 {
     public Joystick joystick;
     private Rigidbody _rigidBody;
 
-    public float moveSpeed;
     [SerializeField] private float _rotationSpeed;
     private Vector2 _inputValues;
 
@@ -37,6 +34,6 @@ public class CharacterController : MonoBehaviour
         _angle = Mathf.LerpAngle(transform.eulerAngles.y, _targetAngle, _rotationSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Euler(0, _angle, 0);
 
-        _rigidBody.velocity = (Vector3.forward * _inputValues.y + Vector3.right * _inputValues.x).normalized * moveSpeed;
+        _rigidBody.velocity = (Vector3.forward * _inputValues.y + Vector3.right * _inputValues.x).normalized * _playerSpeed;
     }
 }
